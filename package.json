@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "@types/ws": "^8.5.10",
+    "@types/yargs": "^17.0.32",
+    "typescript": "^5.4.3"
+  },
+  "scripts": {
+    "world": "ts-node packages/world/index.ts",
+    "agent": "ts-node packages/agent/index.ts",
+    "client": "ts-node packages/client/index.ts"
+  },
+  "dependencies": {
+    "ws": "^8.16.0",
+    "yargs": "^17.7.2"
+  }
+}
