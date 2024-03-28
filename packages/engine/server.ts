@@ -1,9 +1,5 @@
 import WebSocket from "ws";
 
-//Register clients when connected, request them type
-//So we know each client if is a client or agent
-//The type message, will also include name/id
-//like AgentId or Game Id
 let wss: WebSocket.Server | null = null;
 const port = 7777;
 export const initServer = (

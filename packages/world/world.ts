@@ -3,11 +3,7 @@ import type WebSocket from "ws";
 export const agents = new Map();
 export const clients = new Map();
 
-export const Add = (
-  is_agent: boolean,
-  data: any,
-  ws: WebSocket
-) => {
+export const Add = (is_agent: boolean, data: any, ws: WebSocket) => {
   if (is_agent) {
     if (agents.has(ws)) {
       return;
@@ -31,20 +27,18 @@ export const Remove = (ws: WebSocket) => {
   }
 };
 
-export const GetAgentSocketById = (id: any) => {
-  const socket = agents.forEach((value, key) => {
-    if (value?.id == id) {
-      return key;
-    }
+export const GetAgentSocketById = (id: any): WebSocket | null => {
+  const socket = Array.from(agents).find(([key, value]) => {
+    return value?.id === id;
   });
-  return socket;
+  return socket ? socket[0] : null;
 };
 
-export const GetClientSocketById = (id: any) => {
-  const socket = clients.forEach((value, key) => {
-    if (value?.id == id) {
+export const GetClientSocketById = (id: any): WebSocket | null => {
+  for (const [key, value] of clients) {
+    if (value?.id === id) {
       return key;
     }
-  });
-  return socket;
+  }
+  return null;
 };

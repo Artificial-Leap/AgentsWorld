@@ -1,7 +1,8 @@
 import yargs from "yargs";
 import agents, { TAgent } from "./data/agents";
 import { initClient, send } from "../engine/client";
-import { identification } from "../engine/packets";
+import { identification, receive_action } from "../engine/packets";
+import HandleAction from "./action_handler";
 
 //npm run agent -- --id=1
 export let agent: TAgent | null = null;
@@ -20,8 +21,12 @@ const OnConnected = () => {
 };
 
 const OnMessage = (message: any) => {
-    const id = message.id;
-    
+  const id = message.id;
+
+  if (id === receive_action) {
+    const { data } = message;
+    HandleAction(data);
+  }
 };
 
 const OnDisconnected = () => {};
@@ -43,7 +48,6 @@ const init = async () => {
       agent = agents[i];
     }
   }
-  console.log("got agent:", agent);
   initClient(OnConnected, OnMessage, OnDisconnected);
 };
 
