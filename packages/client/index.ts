@@ -1,7 +1,10 @@
 import { initClient, send } from "../engine/client";
 import { identification, receive_action } from "../engine/packets";
 import readLine from "./reader";
+import dotenv from "dotenv";
 
+dotenv.config();
+const port = parseInt(process.env.PORT as string);
 const OnConnected = () => {
   console.log("Connected to server!");
   const identification_packet = {
@@ -26,5 +29,5 @@ const OnMessage = (message: any) => {
 
 const OnDisconnected = () => {};
 
-initClient(OnConnected, OnMessage, OnDisconnected);
+initClient(port, OnConnected, OnMessage, OnDisconnected);
 readLine();

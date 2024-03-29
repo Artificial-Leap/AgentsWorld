@@ -10,6 +10,8 @@
     "client": "ts-node packages/client/index.ts"
   },
   "dependencies": {
+    "@huggingface/inference": "^2.6.6",
+    "dotenv": "^16.4.5",
     "ws": "^8.16.0",
     "yargs": "^17.7.2"
   }

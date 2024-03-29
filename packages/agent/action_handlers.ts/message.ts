@@ -1,15 +1,16 @@
 import { agent } from "..";
 import { send } from "../../engine/client";
 import { receive_action } from "../../engine/packets";
-import DoLLMCall, { DEFAULT_LLM } from "../llm";
+import DoLLMCall, { DEFAULT_LLM, initLLMConversation } from "../llm";
+import { TMessage } from "../types";
 
 interface Message {
-  [sender_id: string]: string[];
+  [sender_id: string]: TMessage[];
 }
 
 const messages: { [sender_id: string]: Message } = {};
 
-export const HandleMessage = (
+export const HandleMessage = async (
   client_type: string,
   sender_id: string,
   message: string
@@ -19,10 +20,11 @@ export const HandleMessage = (
   }
   if (!messages[sender_id][sender_id]) {
     messages[sender_id][sender_id] = [];
+    messages[sender_id][sender_id].push(initLLMConversation(DEFAULT_LLM));
   }
 
-  messages[sender_id][sender_id].push(message);
-  const response = DoLLMCall(messages[sender_id][sender_id], DEFAULT_LLM);
+  messages[sender_id][sender_id].push({ Sender: "user", Content: message });
+  const response = await DoLLMCall(messages[sender_id][sender_id], DEFAULT_LLM);
 
   const new_packet = {
     id: receive_action,

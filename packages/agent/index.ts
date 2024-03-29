@@ -3,10 +3,14 @@ import agents, { TAgent } from "./data/agents";
 import { initClient, send } from "../engine/client";
 import { identification, receive_action } from "../engine/packets";
 import HandleAction from "./action_handler";
+import dotenv from "dotenv";
+import { DEFAULT_LLM, initLLM } from "./llm";
+
+dotenv.config();
+const port = parseInt(process.env.PORT as string);
 
 //npm run agent -- --id=1
 export let agent: TAgent | null = null;
-
 const OnConnected = () => {
   console.log("Connected to server!");
   const identification_packet = {
@@ -48,7 +52,8 @@ const init = async () => {
       agent = agents[i];
     }
   }
-  initClient(OnConnected, OnMessage, OnDisconnected);
+  initLLM(DEFAULT_LLM);
+  initClient(port, OnConnected, OnMessage, OnDisconnected);
 };
 
 init();

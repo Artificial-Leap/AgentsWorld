@@ -1,9 +1,9 @@
 import WebSocket from "ws";
 
-const port = 7777;
 let ws: WebSocket | null = null;
 
 export const initClient = (
+  port: number,
   OnConnected: () => void,
   OnMessage: (message: any) => void,
   OnDisconnected: () => void

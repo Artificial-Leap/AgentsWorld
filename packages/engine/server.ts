@@ -1,8 +1,8 @@
 import WebSocket from "ws";
 
 let wss: WebSocket.Server | null = null;
-const port = 7777;
 export const initServer = (
+  port: number,
   OnClientConnected: (ws: WebSocket) => void,
   OnMessaage: (ws: WebSocket, message: any) => void,
   OnClientDisconnected: (ws: WebSocket) => void

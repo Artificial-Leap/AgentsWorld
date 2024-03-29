@@ -2,6 +2,10 @@ import { identification } from "../engine/packets";
 import { initServer, send } from "../engine/server";
 import type WebSocket from "ws";
 import { Add, GetAgentSocketById, GetClientSocketById, Remove } from "./world";
+import dotenv from "dotenv";
+
+dotenv.config();
+const port = parseInt(process.env.PORT as string);
 
 const OnClientConnected = (ws: WebSocket) => {
   console.log("New client connected!");
@@ -38,4 +42,4 @@ const OnClientDisconnected = (ws: WebSocket) => {
   Remove(ws);
 };
 
-initServer(OnClientConnected, OnMessage, OnClientDisconnected);
+initServer(port, OnClientConnected, OnMessage, OnClientDisconnected);
