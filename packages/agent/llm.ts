@@ -47,9 +47,17 @@ export const initLLMConversation = (model: string): TMessage => {
     Sender: "user",
     Content: "",
   };
+  let startingPhrases = "";
+  if (agent) {
+    for (let i = 0; i < agent.usual_starting_phrases.length; i++) {
+      startingPhrases += `${agent.usual_starting_phrases[i]}, `;
+    }
+  }
+
   if (model === "mistralai/Mistral-7B-Instruct-v0.1") {
-    prompt.Content = "<INFORMATION>";
-    prompt.Content += `Act as an agent and roleplay with the user, your name is: ${agent?.name} and your personality: ${agent?.personality}`;
+    prompt.Content = "<INFORMATION>\n";
+    prompt.Content += `Act as an agent and roleplay with the user, your name is: ${agent?.name} and your personality: ${agent?.personality}\n`;
+    prompt.Content += `Your usual starting phrases are: ${startingPhrases}\n`;
     prompt.Content += "</INFORMATION>";
   }
   return prompt;
