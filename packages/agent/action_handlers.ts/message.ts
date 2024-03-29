@@ -40,3 +40,21 @@ export const HandleMessage = async (
   };
   send(new_packet);
 };
+
+export const SendMessageToAgent = (
+  target_agent_id: string,
+  message: string
+) => {
+  const new_packet = {
+    id: receive_action,
+    target_type: "agent",
+    target_id: target_agent_id,
+    data: {
+      message,
+      sender_id: "game",
+      client_type: "client",
+      action_type: "message",
+    },
+  };
+  send(new_packet);
+};
